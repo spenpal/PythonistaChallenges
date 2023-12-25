@@ -6,4 +6,3 @@ def create_map(m):
     m = [[1 for _ in line] for line in m]
     [[m[r].__setitem__(c, 0) for c in range(le, ri)] for s, t in p for i, l in enumerate(range((abs(s[0] - t[0]) + abs(s[1] - t[1])) * 2 + 1, 0, -2)) for r in [max(s[0] - i, 0), min(s[0] + i, len(m) - 1)] for le, ri in [(max(s[1] - l // 2, 0), min(s[1] + l // 2 + 1, len(m[0])))]]
     return m
-
