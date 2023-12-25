@@ -3,14 +3,8 @@ from pprint import pprint
 
 
 def parse(original_map: str) -> list[list[int]]:
-    m = []
-    for line in original_map.splitlines():
-        line = re.sub(
-            r"[^\.ST]", "", line
-        )  # remove everything, except periods and letters
-        if line:
-            m.append(line)
-    return m
+    new_map = re.sub(r"[^\.ST\n]", "", original_map)
+    return new_map.strip().splitlines()
 
 
 def create_map(original_map: str) -> list[list[int]]:
@@ -42,8 +36,7 @@ def create_map(original_map: str) -> list[list[int]]:
 
     # Find dead zones using Taxicab geometry and fill dead zones with 0's
     for sensor, tag in pairs:
-        xd, yd = sensor[0] - tag[0], sensor[1] - tag[1]
-        radius = abs(xd) + abs(yd)
+        radius = abs(sensor[0] - tag[0]) + abs(sensor[1] - tag[1])
 
         # Fill in dead zones line by line, starting from the center. Ensure you are still in bounds of the map.
         x, y = sensor
