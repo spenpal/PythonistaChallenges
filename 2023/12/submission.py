@@ -42,7 +42,7 @@ def create_map(original_map: str) -> list[list[int]]:
         for i, length in enumerate(range(radius * 2 + 1, 0, -2)):
             row_top, row_bottom = max(x - i, 0), min(x + i, len(m) - 1)
             left, right = max(y - length // 2, 0), min(y + length // 2 + 1, len(m[0]))
-            m[row_top][left:right] = [0] * length
-            m[row_bottom][left:right] = [0] * length
+            m[row_top][left:right] = [0] * (right - left)
+            m[row_bottom][left:right] = [0] * (right - left)
 
     return m
