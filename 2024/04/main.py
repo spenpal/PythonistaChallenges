@@ -39,14 +39,14 @@ def sort_dates(dates: list[str], operations: list[str]) -> list[str]:  # noqa: P
                 dates.sort(reverse=True)
             case "UP":
                 month = int(op[1])
-                for i in range(length):
-                    if i != 0 and dates[i].month == month:
+                for i in range(1, length):
+                    if dates[i].month == month:
                         dates[i - 1], dates[i] = dates[i], dates[i - 1]
             case "DOWN":
                 day = int(op[1])
                 i = 0
-                while i < length:
-                    if i != length - 1 and dates[i].day == day:
+                while i < length - 1:
+                    if dates[i].day == day:
                         if dates[i + 1].day != day:
                             dates[i], dates[i + 1] = dates[i + 1], dates[i]
                         i += 2
@@ -60,10 +60,12 @@ def sort_dates(dates: list[str], operations: list[str]) -> list[str]:  # noqa: P
             case "BOT":
                 year = int(op[1])
                 bot_dates = []
+                curr_length = length
                 i = 0
-                while i < length:
+                while i < curr_length:
                     if dates[i].year == year:
                         bot_dates.append(dates.pop(i))
+                        curr_length -= 1
                     else:
                         i += 1
                 dates.extend(bot_dates)
