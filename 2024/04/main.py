@@ -46,25 +46,17 @@ def sort_dates(dates: list[str], operations: list[str]) -> list[str]:
                     if dates[i].day == day:
                         if dates[i + 1].day != day:
                             dates[i], dates[i + 1] = dates[i + 1], dates[i]
-                        i += 2
-                    else:
                         i += 1
+                    i += 1
             case "TOP":
                 year = op[1]
-                for i in range(length):
-                    if dates[i].year == year:
-                        dates.insert(0, dates.pop(i))
+                top_dates = [date for date in dates if date.year == year]
+                other_dates = [date for date in dates if date.year != year]
+                dates = top_dates[::-1] + other_dates
             case "BOT":
                 year = op[1]
-                bot_dates = []
-                curr_length = length
-                i = 0
-                while i < curr_length:
-                    if dates[i].year == year:
-                        bot_dates.append(dates.pop(i))
-                        curr_length -= 1
-                    else:
-                        i += 1
-                dates.extend(bot_dates)
+                other_dates = [date for date in dates if date.year != year]
+                bot_dates = [date for date in dates if date.year == year]
+                dates = other_dates + bot_dates
 
     return [str(date) for date in dates]
