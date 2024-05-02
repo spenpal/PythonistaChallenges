@@ -32,7 +32,7 @@ def sort_dates(dates: list[str], operations: list[str]) -> list[str]:
         match op[0]:
             case "ASC":
                 dates.sort()
-            case "DESC":
+            case "DSC":
                 dates.sort(reverse=True)
             case "UP":
                 month = op[1]
