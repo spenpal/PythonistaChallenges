@@ -50,13 +50,17 @@ def sort_dates(dates: list[str], operations: list[str]) -> list[str]:
                     i += 1
             case "TOP":
                 year = op[1]
-                top_dates = [date for date in dates if date.year == year]
-                other_dates = [date for date in dates if date.year != year]
-                dates = top_dates[::-1] + other_dates
+                for i in range(length):
+                    if dates[i].year == year:
+                        dates.insert(0, dates.pop(i))
             case "BOT":
                 year = op[1]
-                other_dates = [date for date in dates if date.year != year]
-                bot_dates = [date for date in dates if date.year == year]
-                dates = other_dates + bot_dates
+                i, last_index = 0, length - 1
+                while i <= last_index:
+                    if dates[i].year == year:
+                        dates.append(dates.pop(i))
+                        last_index -= 1
+                    else:
+                        i += 1
 
     return [str(date) for date in dates]
