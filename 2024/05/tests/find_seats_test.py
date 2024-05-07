@@ -11,7 +11,7 @@ sys.path.append(str(Path.cwd()))
 from main import find_seats
 
 num_of_test_cases = 0
-test_cases_file_path = Path(__file__).parent / "test_cases.json"
+test_cases_file_path = Path(__file__).parent / "find_seats_test_cases.json"
 
 
 def load_test_cases() -> list[tuple[str, str]]:
