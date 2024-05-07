@@ -20,7 +20,7 @@ def find_seats(seats: list[list[int]], n: int) -> int:
 def optimal_seats(seats: list[list[int]], n: int) -> tuple[int, int] | None:
     rows, cols = len(seats), len(seats[0])
     if not (1 <= n <= cols):
-        return 0
+        return None
 
     center = (len(seats) // 2, len(seats[0]) // 2)
     best_group, min_dist = None, float("inf")
