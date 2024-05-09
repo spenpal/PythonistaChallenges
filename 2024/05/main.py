@@ -27,17 +27,17 @@ def optimal_seats(seats: list[list[int]], n: int) -> tuple[int, int] | None:
     for r in range(rows):
         # Sliding window
         ones = seats[r][: n - 1].count(1)
-        for i in range(cols - n + 1):
-            ones += seats[r][i + n - 1] == 1
+        for c in range(cols - n + 1):
+            ones += seats[r][c + n - 1] == 1
 
             if not ones:
                 # Calculate distance to center
-                pos = (r, i + ceil(n / 2) - 1)
+                pos = (r, c + ceil(n / 2) - 1)
                 dist = abs(pos[0] - center[0]) + abs(pos[1] - center[1])
                 if dist < min_dist:
                     min_dist = dist
                     best_group = pos
 
-            ones -= seats[r][i] == 1
+            ones -= seats[r][c] == 1
 
     return best_group
