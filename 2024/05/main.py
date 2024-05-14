@@ -14,6 +14,7 @@ def find_seats(seats: list[list[int]], n: int) -> int:
                 groups += max(0, c - prev - n)
                 prev = c
         groups += max(0, cols - prev - n)
+
     return groups
 
 
@@ -22,7 +23,7 @@ def optimal_seats(seats: list[list[int]], n: int) -> tuple[int, int] | None:
     if not (1 <= n <= cols):
         return None
 
-    center = (len(seats) // 2, len(seats[0]) // 2)
+    center = (len(seats) // 2, ceil(len(seats[0]) / 2) - 1)
     best_group, min_dist = None, float("inf")
     for r in range(rows):
         # Sliding window
@@ -40,4 +41,4 @@ def optimal_seats(seats: list[list[int]], n: int) -> tuple[int, int] | None:
 
             ones -= seats[r][c] == 1
 
-    return best_group
+    return best_group[::-1]  # (r, c) -> (x, y) coords
