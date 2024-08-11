@@ -1,18 +1,14 @@
 def break_code(code: tuple[int]) -> int | None:
-    # No possible consecutive sequence
-    if abs(code[0] - code[1]) != 1:
-        return max(code)
-
-    # Check for all numbers being the same
+    # Any string which has 4 of the same digits
     if code[0] == code[1] == code[2] == code[3]:
         return code[0]
 
-    # Check for full consecutive sequence
-    if (
-        abs(code[0] - code[1]) == 1
-        and abs(code[1] - code[2]) == 1
-        and abs(code[2] - code[3]) == 1
-    ):
+    # Any string which doesn't have a consecutive sequence at the beginning
+    if abs(code[0] - code[1]) != 1:
+        return max(code)
+
+    # Any string which is fully consecutive
+    if (code[0] - code[1]) == (code[1] - code[2]) == (code[2] - code[3]):
         return 0
 
     return None
@@ -26,15 +22,18 @@ def decipher(codes: list[str]) -> str:
 
     while len(res) < 4:
         total = 0
+
         while True:
             i += 1
             code = codes[i % codes_len]
             final = break_code(code)
             if final is not None:
+                total += final
                 break
-            total += code[2] if abs(code[2] - code[1]) != 1 else code[3]
+            total += (
+                code[3] if (code[0] + ((code[1] - code[0]) * 2) == code[2]) else code[2]
+            )
 
-        total += final
         res.append(str(total % 10))
 
     return "".join(res)
