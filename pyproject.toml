@@ -28,6 +28,7 @@ ignore = [
     "ISC001",   # single-line-implicit-string-concatenation
     "ISC002",   # multi-line-implicit-string-concatenation
     "PLR2004",  # magic-value-comparison
+    "PLW2901",  # redefined-loop-name
     "Q000",     # bad-quotes-inline-string
     "Q001",     # bad-quotes-multiline-string
     "Q002",     # bad-quotes-docstring
