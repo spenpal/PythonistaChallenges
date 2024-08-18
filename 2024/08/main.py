@@ -145,22 +145,3 @@ def advanced_sort(pieces: list[str]) -> list[str]:
         for p in pieces
         if p.length == common_length and p.validate(advanced=True)
     ]
-
-
-def main():
-    pieces = [
-        "@T00000@L04300@B02410@R00000",
-        "@B00000@T000-7-5@L00000@R00000",
-        "@T00000@B03400@L00000@R0-4-300",
-        "@R00100@T0-3-400@L00000@B00000",
-        "@L000002054@R00000-5-512@B000003-231@T000002-24-4",
-        "@L00-100@R00000@T0-2-4-10@B00000",
-    ]
-    for piece in pieces:
-        p = Piece(piece)
-        print(p.sides)
-        print(p)
-
-
-if __name__ == "__main__":
-    main()
