@@ -46,8 +46,8 @@ class Piece:
             if advanced:
                 for col in range(length):
                     intersect = (
-                        (L[row] < -col)
-                        + (R[row] < -(length - col - 1))
+                        (left < -col)
+                        + (right < -(length - col - 1))
                         + (T[col] < -row)
                         + (B[col] < -(length - row - 1))
                     )
