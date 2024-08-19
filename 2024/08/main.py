@@ -13,9 +13,9 @@ class Piece:
             return {}
 
         sides = {}
-        negative = False
         for side in self.piece[1:].split("@"):
             nums = []
+            negative = False
             for char in side[1:]:
                 if char == "-":
                     negative = True
@@ -34,38 +34,26 @@ class Piece:
         if len(self.sides) != 4 or not self.length:
             return False
 
-        # Parallel collision(s) detected
-        for (left, right), (top, bottom) in zip(
-            zip(self.sides["L"], self.sides["R"]), zip(self.sides["T"], self.sides["B"])
-        ):
-            if (left + self.length + right <= 0) or (top + self.length + bottom <= 0):
+        L, R, T, B = self.sides["L"], self.sides["R"], self.sides["T"], self.sides["B"]
+        length = self.length
+
+        for row in range(length):
+            left, right, top, bottom = L[row], R[row], T[row], B[row]
+            # Parallel cut(s) detected
+            if (left + length + right <= 0) or (top + length + bottom <= 0):
                 return False
 
-        # Perpendicular collision(s) detected
-        if advanced:
-            for idx, (left, right) in enumerate(
-                zip(self.sides["L"], self.sides["R"]), start=1
-            ):
-                if (
-                    left < 0
-                    and (
-                        any(num <= -idx for num in self.sides["T"][:-left])
-                        or any(
-                            num <= -(self.length - idx + 1)
-                            for num in self.sides["B"][:-left]
-                        )
+            if advanced:
+                for col in range(length):
+                    intersect = (
+                        (L[row] < -col)
+                        + (R[row] < -(length - col - 1))
+                        + (T[col] < -row)
+                        + (B[col] < -(length - row - 1))
                     )
-                ) or (
-                    right < 0
-                    and (
-                        any(num <= -idx for num in self.sides["T"][right:])
-                        or any(
-                            num <= -(self.length - idx + 1)
-                            for num in self.sides["B"][right:]
-                        )
-                    )
-                ):
-                    return False
+                    # Perpendicular cut(s) detected
+                    if intersect > 1:
+                        return False
 
         return True
 
@@ -79,43 +67,30 @@ class Piece:
 
         # Create base grid
         grid = [[empty] * max_length for _ in range(max_length)]
+        length = self.length
 
-        for idx in range(self.length):
+        for idx in range(length):
             row_idx = idx + max_side
-            grid[row_idx][max_side : max_side + self.length] = [base] * self.length
+            grid[row_idx][max_side : max_side + length] = [base] * length
+
+        L, R, T, B = self.sides["L"], self.sides["R"], self.sides["T"], self.sides["B"]
 
         # Add left/right bumps/grooves
-        for idx, (left, right) in enumerate(
-            zip(self.sides["L"], self.sides["R"]), start=max_side
-        ):
-            # Add bumps
+        for idx, (left, right) in enumerate(zip(L, R), start=max_side):
             grid[idx][max_side - left : max_side] = [bump] * left
-            grid[idx][max_side + self.length : max_side + self.length + right] = [
-                bump
-            ] * right
-
-            # Add grooves
+            grid[idx][max_side + length : max_side + length + right] = [bump] * right
             grid[idx][max_side : max_side - left] = [groove] * -left
-            grid[idx][max_side + self.length + right : max_side + self.length] = [
-                groove
-            ] * -right
+            grid[idx][max_side + length + right : max_side + length] = [groove] * -right
 
         # Transpose grid
         grid = list(map(list, zip(*grid)))
 
         # Add top/bottom bumps/grooves
-        for idx, (top, bottom) in enumerate(
-            zip(self.sides["T"], self.sides["B"]), start=max_side
-        ):
-            # Add bumps
+        for idx, (top, bottom) in enumerate(zip(T, B), start=max_side):
             grid[idx][max_side - top : max_side] = [bump] * top
-            grid[idx][max_side + self.length : max_side + self.length + bottom] = [
-                bump
-            ] * bottom
-
-            # Add grooves
+            grid[idx][max_side + length : max_side + length + bottom] = [bump] * bottom
             grid[idx][max_side : max_side - top] = [groove] * -top
-            grid[idx][max_side + self.length + bottom : max_side + self.length] = [
+            grid[idx][max_side + length + bottom : max_side + length] = [
                 groove
             ] * -bottom
 
