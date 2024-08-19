@@ -28,6 +28,7 @@ ignore = [
     "INP001",   # implicit-namespace-package
     "ISC001",   # single-line-implicit-string-concatenation
     "ISC002",   # multi-line-implicit-string-concatenation
+    "N806",     # non-lowercase-variable-in-function
     "PLR2004",  # magic-value-comparison
     "PLW2901",  # redefined-loop-name
     "Q000",     # bad-quotes-inline-string
