@@ -105,7 +105,7 @@ def sort(pieces: list[str]) -> list[str]:
         return []
 
     pieces = [Piece(p) for p in pieces]
-    common_length = Counter(p.length for p in pieces).most_common(1)[0][0]
+    common_length = Counter(p.length for p in pieces if p.length).most_common(1)[0][0]
     return [p.piece for p in pieces if p.length == common_length and p.validate()]
 
 
@@ -114,7 +114,7 @@ def advanced_sort(pieces: list[str]) -> list[str]:
         return []
 
     pieces = [Piece(p) for p in pieces]
-    common_length = Counter(p.length for p in pieces).most_common(1)[0][0]
+    common_length = Counter(p.length for p in pieces if p.length).most_common(1)[0][0]
     return [
         p.piece
         for p in pieces
