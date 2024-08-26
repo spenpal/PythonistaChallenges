@@ -10,6 +10,7 @@ def run_tests(test_cases_file, func, iterations=10_000) -> None:
     with Path(test_cases_file).open() as file:
         test_cases = json.load(file)
 
+    print(f"INPUT: {test_cases_file}")
     for i, test_case in enumerate(test_cases, start=1):
         inputs = literal_eval(test_case["input"])
         expected_output = literal_eval(test_case["expected"])
@@ -26,4 +27,4 @@ def run_tests(test_cases_file, func, iterations=10_000) -> None:
 
 if __name__ == "__main__":
     # TODO: Add function(s) to test
-    run_tests("test_cases.json", ...)  # noqa: F405
+    run_tests("test_cases.json", ...)
