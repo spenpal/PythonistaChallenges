@@ -8,7 +8,6 @@ readme = "README.md"
 select = ["ALL"]
 ignore = [
     "ANN001",   # missing-type-function-argument
-    "ANN101",   # missing-type-self
     "ANN202",   # missing-return-type-private-function
     "B905",     # zip-without-explicit-strict
     "C901",     # complex-structure
