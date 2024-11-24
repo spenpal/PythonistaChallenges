@@ -6,17 +6,15 @@ def is_valid_integer(num: float) -> bool:
 
 
 def countdown(numbers: tuple[int, ...], target: int) -> str:
+    numbers = list(map(str, numbers))
     operator_perms = product(["+", "-", "*", "/", "**"], repeat=len(numbers) - 1)
     best_result = float("-inf")
 
     for num_perm in permutations(numbers):
         for op_perm in operator_perms:
-            expr_parts = []
-            for num, op in zip(num_perm, op_perm):
-                expr_parts.append(str(num))
-                expr_parts.append(op)
-            expr_parts.append(str(num_perm[-1]))
-            expr = "".join(expr_parts)
+            expr = "".join(
+                [num + op for num, op in zip(num_perm, op_perm)] + [num_perm[-1]]
+            )
 
             try:
                 result = eval(expr)  # noqa: S307
